@@ -11,3 +11,5 @@ SQL> create table tickets(tid number(10),train number(10) NOT NULL,dep varchar2(
 
 
 SQL> create table transactions(transactionid number(10),tid number(10) NOT NULL,userid number(10) NOT NULL,quantity number(10) NOT NULL,time date NOT NULL,status varchar2(1) NOT NULL,primary key (transactionid),foreign key (tid) referencestickets(tid),foreign key (userid) references users(userid));
+
+yiren ye
