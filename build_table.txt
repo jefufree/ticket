@@ -1,3 +1,5 @@
+create a new database user  name:ticket //////// password:mercury
+
 SQL> create table users (userid number(10),username varchar2(20) NOT NULL,password varchar2(20) NOT NULL,firstname varchar2(20) NOT NULL,lastname varchar2(20) NOT NULL,address varchar2(20) NOT NULL,phone number(10) NOT NULL,enable number(1) NOT NULL,primary key (userid));
 
 
