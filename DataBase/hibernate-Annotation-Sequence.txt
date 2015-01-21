@@ -16,3 +16,12 @@ cache 20; // 不知道是什么
 @SequenceGenerator(name="The name in Hibernate", sequenceName="数据库中sequence的名称",allocationSize=1,initialValue=1) 
 @Column(name = "ID")
 ...
+
+3. SQL:
+
+Create sequence seq_id
+minvalue 1
+start with 1
+maxvalue 9999999999
+increment by 57
+cache 20;
