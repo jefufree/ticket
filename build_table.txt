@@ -5,14 +5,17 @@ SQL> create table users (userid number(10),username varchar2(20) NOT NULL,passwo
 
 SQL> create table user_roles(userid number(10) NOT NULL,authority varchar2(20) NOT NULL,foreign key (userid) references users(userid),primary key (userid));
 
+SQL> create table tickets(tid number(10),train number(10) NOT NULL,dep varchar2(20) NOT NULL,des varchar2(20) NOT NULL,price number(10) NOT NULL,total number(10) NOT NULL,available number(10) NOT NULL,sold number(10) NOT NULL,deptime date NOT NULL,primary key (tid));
+
+
+drop table user_cards
 
 SQL> create table user_cards(userid number(10) NOT NULL,accountnum number(16) NOT NULL,expiredate number(4) NOT NULL,accountname varchar2(20) NOT NULL,foreign key (userid) references users(userid),primary key (accountnum));
 
 
-SQL> create table tickets(tid number(10),train number(10) NOT NULL,dep varchar2(20) NOT NULL,des varchar2(20) NOT NULL,price number(10) NOT NULL,total number(10) NOT NULL,available number(10) NOT NULL,sold number(10) NOT NULL,deptime date NOT NULL,primary key (tid));
-
+drop table transactions
 
 SQL> create table transactions(transactionid number(10),tid number(10) NOT NULL,userid number(10) NOT NULL,accountnum number(16) NOT NULL, quantity number(10) NOT NULL,time date NOT NULL,status varchar2(1) NOT NULL,primary key (transactionid),foreign key (tid) references tickets(tid),foreign key (userid) references users(userid),foreign key (accountnum) references user_cards(accountnum));
 
 
-firstly rebuild cards table then rebuild transactions table
+
