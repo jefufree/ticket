@@ -1,0 +1,18 @@
+1. Create sequence in the database:
+
+create sequence name
+minvalue 1 // 最小值
+start with 1 // 起始值
+maxvalue 999999 // 最大值
+increment by 5 // 步长
+cache 20; // 不知道是什么
+
+2. Use annotation in Hibernate
+@Id  
+//GenerationType.SEQUENCE -> 策略为sequence
+@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="The name in Hibernate")  
+
+//allocationSize=1,initialValue=1 -> 解决sequence无序增长问题
+@SequenceGenerator(name="The name in Hibernate", sequenceName="数据库中sequence的名称",allocationSize=1,initialValue=1) 
+@Column(name = "ID")
+...
