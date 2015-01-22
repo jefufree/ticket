@@ -3,9 +3,12 @@ package com.mercury.ticket.persistence.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="tickets")
@@ -22,6 +25,8 @@ public class Ticket {
 	
 	public Ticket(){}
 	@Id
+    @GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy="increment")
     @Column(nullable = false)
 	public int getTid() {
 		return tid;
