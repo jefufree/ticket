@@ -1,4 +1,4 @@
-package com.mercury.beans;
+package com.mercury.ticket.persistence.model;
 
 public class Ticket {
 	private int tid;
