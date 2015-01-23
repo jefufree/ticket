@@ -14,7 +14,7 @@ public class Transaction {
 	private int transactionid;
 	private int tid;
 	private int userid;
-	private String accountnum;
+	private String method;
 	private int quantity;
 	private String time;
 	private String status;
@@ -43,11 +43,11 @@ public class Transaction {
 		this.userid = userid;
 	}
 	@Column(nullable=false)
-	public String getAccountnum() {
-		return accountnum;
+	public String getMethod() {
+		return method;
 	}
-	public void setAccountnum(String accountnum) {
-		this.accountnum = accountnum;
+	public void setMethod(String method) {
+		this.method = method;
 	}
 	@Column(nullable=false)
 	public int getQuantity() {

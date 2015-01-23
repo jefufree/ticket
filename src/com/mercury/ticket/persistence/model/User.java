@@ -19,6 +19,12 @@ public class User {
 	private String address;
 	private String phone;
 	private int enable;
+	private String authority;
+	private String accountnum;
+	private String expiredate;
+	private String accountname;
+	private int sn;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_id")
 	@SequenceGenerator(name ="seq_id",sequenceName="seq_id",allocationSize=1,initialValue=1)
@@ -78,6 +84,40 @@ public class User {
 	public void setEnable(int enable) {
 		this.enable = enable;
 	}
-	
+	@Column(nullable=false)
+	public String getAuthority() {
+		return authority;
+	}
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+	@Column
+	public String getAccountnum() {
+		return accountnum;
+	}
+	public void setAccountnum(String accountnum) {
+		this.accountnum = accountnum;
+	}
+	@Column
+	public String getExpiredate() {
+		return expiredate;
+	}
+	public void setExpiredate(String expiredate) {
+		this.expiredate = expiredate;
+	}
+	@Column
+	public String getAccountname() {
+		return accountname;
+	}
+	public void setAccountname(String accountname) {
+		this.accountname = accountname;
+	}
+	@Column
+	public int getSn() {
+		return sn;
+	}
+	public void setSn(int sn) {
+		this.sn = sn;
+	}
 	
 }
