@@ -45,4 +45,9 @@ public class TicketService {
 		hd.save(t);
 		return "su";
 	}
+	
+	public String updateTicket(Ticket ticket){
+		hd.save(ticket);
+		return "Succeed";
+	}
 }
