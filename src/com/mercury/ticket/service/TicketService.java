@@ -14,6 +14,7 @@ import com.mercury.ticket.persistence.model.Ticket;
 @Service
 @Transactional
 public class TicketService {
+	
 	@Autowired
 	@Qualifier("ticketDao")
 	private HibernateDao<Ticket,Integer> hd;
@@ -28,9 +29,20 @@ public class TicketService {
 	public List<Ticket> getAllTickets(){
 		return hd.findAll();
 	}
-	public String updateTicket(Ticket ticket){
-		hd.save(ticket);
-		return "Succeed";
+	public String prin(){
+		return "this is service";
 	}
 	
+	public String saveticket(){
+		Ticket t = new Ticket();
+		t.setAvailable(1);
+		t.setDep("princeton");
+		t.setDes("penn");
+		t.setPrice(15);
+		t.setSold(2);
+		t.setTotal(2);
+		t.setTrain(56);
+		hd.save(t);
+		return "su";
+	}
 }
