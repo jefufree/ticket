@@ -14,10 +14,10 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="tickets")
 public class Ticket {
 	private int tid;
-	private int train;
+	private String train;
 	private String dep;
 	private String des;
-	private int price;
+	private String price;
 	private int total;
 	private int available;
 	private int sold;
@@ -36,10 +36,10 @@ public class Ticket {
 	}
 	
 	@Column
-	public int getTrain() {
+	public String getTrain() {
 		return train;
 	}
-	public void setTrain(int train) {
+	public void setTrain(String train) {
 		this.train = train;
 	}
 	
@@ -60,10 +60,10 @@ public class Ticket {
 	}
 	
 	@Column
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	
