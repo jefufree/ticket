@@ -17,5 +17,6 @@ drop table transactions
 
 SQL> create table transactions(transactionid number(10),tid number(10) NOT NULL,userid number(10) NOT NULL,accountnum number(16) NOT NULL, quantity number(10) NOT NULL,time date NOT NULL,status varchar2(1) NOT NULL,primary key (transactionid),foreign key (tid) references tickets(tid),foreign key (userid) references users(userid),foreign key (accountnum) references user_cards(accountnum));
 
-
+SQL> alter table tickets
+modify deptime varchar2(20) not null;
 
