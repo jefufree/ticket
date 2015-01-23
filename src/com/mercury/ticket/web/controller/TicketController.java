@@ -42,10 +42,10 @@ public class TicketController {
 		//int tid=Integer.parseInt(request.getParameter("tid"));
 		String dep = request.getParameter("dep");
 		//t.setTid(tid);
-		t.setTrain(123);
+		t.setTrain("123");
 		t.setDep(dep);
 		t.setDes("plainsboro");
-		t.setPrice(120);
+		t.setPrice("120");
 		
 		
 		t.setAvailable(20);
@@ -56,7 +56,7 @@ public class TicketController {
 		
 		
 		ModelAndView mav=new ModelAndView();
-		mav.setViewName("result");
+		mav.setViewName("hello");
 		mav.addObject("msg", "Hello,welcome to Ticketing System!"+s+dep);
 		
 		return mav;

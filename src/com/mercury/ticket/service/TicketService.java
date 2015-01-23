@@ -38,10 +38,10 @@ public class TicketService {
 		t.setAvailable(1);
 		t.setDep("princeton");
 		t.setDes("penn");
-		t.setPrice(15);
+		t.setPrice("15");
 		t.setSold(2);
 		t.setTotal(2);
-		t.setTrain(56);
+		t.setTrain("56");
 		hd.save(t);
 		return "su";
 	}
