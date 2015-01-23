@@ -1,25 +1,6 @@
 create a new database user  name:ticket //////// password:mercury
 
-1.Create Users
-
-create table users (userid number(10),
-username varchar2(20) NOT NULL,
-password varchar2(20) NOT NULL,
-firstname varchar2(20),
-lastname varchar2(20),
-address varchar2(20),
-phone varchar2(10),
-enable number(1) NOT NULL,
-primary key (userid));
-
-2.Create user_roles
-
-create table user_roles(userid number(10) NOT NULL,
-authority varchar2(20) NOT NULL,
-foreign key (userid) references users(userid),
-primary key (userid));
-
-3.Create ticket
+1. Create ticket
 
 create table tickets(tid number(10),
 train varchar2(10) NOT NULL,
@@ -32,28 +13,34 @@ sold number(10) NOT NULL,
 deptime varchar2(20) NOT NULL,
 primary key (tid));
 
-4.Create user_cards
 
-create table user_cards(userid number(10) NOT NULL,
-accountnum varchar2(16) NOT NULL,
-expiredate varchar2(4) NOT NULL,
-accountname varchar2(20) NOT NULL,
-sn number(3) NOT NULL,
-foreign key (userid) references users(userid),
-primary key (accountnum));
+2.Create Users
 
-5.Create transactions
+create table users (userid number(10),
+username varchar2(20) NOT NULL,
+password varchar2(20) NOT NULL,
+firstname varchar2(20),
+lastname varchar2(20),
+address varchar2(20),
+phone varchar2(10),
+enable number(1) NOT NULL,
+authority varchar2(20) NOT NULL,
+accountnum varchar2(16),
+expiredate varchar2(4),
+accountname varchar2(20),
+sn number(3),
+primary key (userid));
+
+
+3.Create transactions
 
 create table transactions(transactionid number(10),
 tid number(10) NOT NULL,
 userid number(10) NOT NULL,
-accountnum varchar2(16) NOT NULL, 
+method number(1) NOT NULL, 
 quantity number(10) NOT NULL,
 time varchar2(20) NOT NULL,
 status varchar2(1) NOT NULL,
 primary key (transactionid),
 foreign key (tid) references tickets(tid),
-foreign key (userid) references users(userid),
-foreign key (accountnum) references user_cards(accountnum));
-
-
+foreign key (userid) references users(userid));
