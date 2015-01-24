@@ -2,6 +2,7 @@ Service:
 
 Admin:
 Ticket findTicket(String dep,String des,String depdate,String deptime);
+Use HibernateDao.findAllBy4(...).get(0);
 
 String addNewTicket(String dep,String des);
  
@@ -23,7 +24,7 @@ String setCard(User user,String accountnum,String expiredate, String accountname
 String setUser(User user,String firstname,String lastname,String phone,String address);
 
 List<Ticket> userFindTicet(String dep,String des,String depdate,String qty);
-
+Use HibernateDao.findAllBy4(...);
 
 Transaction buyTicket_toQueue(int userid,int ticketid,String qty, int method); -> time = sys.time & status = 'p'
 
