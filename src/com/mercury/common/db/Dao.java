@@ -14,6 +14,9 @@ public interface Dao<T, ID extends Serializable> {
     List<T> findAllBy(String property, List<?> values, Order order);
     List<T> findAllBy(String property, Object value);
     List<T> findAllBy(String property, Object value, Order order);
+    List<T> findAllBy4(String property,Object value,String property2,Object value2, String property3,Object value3,String property4,Object value4);
+    List<T> findAllBy3(String property,Object value,String property2,Object value2, String property3,Object value3);
+    List<T> findAllBy2(String property,Object value,String property2,Object value2); 
     List<T> findAll();
     List<T> findAll(Order order);
     T findBy(String property, Object value);

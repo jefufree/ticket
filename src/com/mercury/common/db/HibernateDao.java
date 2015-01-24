@@ -134,4 +134,37 @@ public class HibernateDao<T, ID extends Serializable> implements Dao<T, ID> {
 		return appSessionFactory;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<T> findAllBy4(String property, Object value, String property2,
+			Object value2, String property3, Object value3, String property4,
+			Object value4) {
+        SessionInfo sessionInfo = getSessionInfo();
+        Criteria criteria = sessionInfo.getSession().createCriteria(klass)
+                .add(Restrictions.eq(property, value)).add(Restrictions.eq(property2, value2)).add(Restrictions.eq(property3, value3)).add(Restrictions.eq(property4, value4));
+        List<T> retval = (List<T>) criteria.list();
+        sessionInfo.cleanup();
+        return retval;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<T> findAllBy3(String property, Object value, String property2,
+			Object value2, String property3, Object value3) {
+        SessionInfo sessionInfo = getSessionInfo();
+        Criteria criteria = sessionInfo.getSession().createCriteria(klass)
+                .add(Restrictions.eq(property, value)).add(Restrictions.eq(property2, value2)).add(Restrictions.eq(property3, value3));
+        List<T> retval = (List<T>) criteria.list();
+        sessionInfo.cleanup();
+        return retval;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> findAllBy2(String property, Object value, String property2,
+			Object value2) {
+        SessionInfo sessionInfo = getSessionInfo();
+        Criteria criteria = sessionInfo.getSession().createCriteria(klass)
+                .add(Restrictions.eq(property, value)).add(Restrictions.eq(property2, value2));
+        List<T> retval = (List<T>) criteria.list();
+        sessionInfo.cleanup();
+        return retval;
+	}
 }
