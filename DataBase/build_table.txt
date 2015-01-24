@@ -3,28 +3,28 @@ create a new database user  name:ticket //////// password:mercury
 1. Create ticket
 
 create table tickets(tid number(10),
-train varchar2(10) NOT NULL,
-dep varchar2(20) NOT NULL,
-des varchar2(20) NOT NULL,
-price varchar2(10) NOT NULL,
-total number(10) NOT NULL,
-available number(10) NOT NULL,
-sold number(10) NOT NULL,
-deptime varchar2(20) NOT NULL,
+dep varchar2(20),
+des varchar2(20),
+price varchar2(10),
+total number(10),
+available number(10) DEFAULT(total-sold),
+sold number(10) DEFAULT 0,
+deptime varchar2(20),
+depdate varchar2(20),
 primary key (tid));
 
 
 2.Create Users
 
 create table users (userid number(10),
-username varchar2(20) NOT NULL,
-password varchar2(20) NOT NULL,
+username varchar2(20),
+password varchar2(20),
 firstname varchar2(20),
 lastname varchar2(20),
 address varchar2(20),
 phone varchar2(10),
-enable number(1) NOT NULL,
-authority varchar2(20) NOT NULL,
+enable number(1),
+authority varchar2(20),
 accountnum varchar2(16),
 expiredate varchar2(4),
 accountname varchar2(20),
@@ -35,12 +35,12 @@ primary key (userid));
 3.Create transactions
 
 create table transactions(transactionid number(10),
-tid number(10) NOT NULL,
-userid number(10) NOT NULL,
-method number(1) NOT NULL, 
-quantity number(10) NOT NULL,
-time varchar2(20) NOT NULL,
-status varchar2(1) NOT NULL,
+tid number(10),
+userid number(10),
+method number(1), 
+quantity number(10),
+time varchar2(20),
+status varchar2(1),
 primary key (transactionid),
 foreign key (tid) references tickets(tid),
 foreign key (userid) references users(userid));

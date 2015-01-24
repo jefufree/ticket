@@ -48,5 +48,13 @@
  	<bean id="ticketDao" parent="genericDao" scope="prototype">
 		<constructor-arg value="com.mercury.ticket.persistence.model.Ticket" />
     </bean>
+    
+    <bean id="userDao" parent="genericDao" scope="prototype">
+		<constructor-arg value="com.mercury.ticket.persistence.model.User" />
+    </bean>
+    
+     <bean id="transactionDao" parent="genericDao" scope="prototype">
+		<constructor-arg value="com.mercury.ticket.persistence.model.Transaction" />
+    </bean>
 	
  </beans>
