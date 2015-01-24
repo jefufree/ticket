@@ -1,0 +1,36 @@
+Service:
+
+Admin:
+Ticket findTicket(String dep,String des,String depdate,String deptime);
+
+String addNewTicket(String dep,String des);
+ 
+String setTicketPrice(Ticket ticket,String price);
+String setTIcketTotal(Ticket ticket,int total );
+String setTicketDate(Ticket ticket,String date);
+String setTicketTime(Ticket ticket,String time);
+
+User:
+User findUser(String username);
+
+String enPassword(String password);
+String addNewUser(String username,String password);
+String sendEmail(String username,String content);
+
+Boolean luhnCard(String accountnum);
+String setCard(User user,String accountnum,String expiredate, String accountname,int sn);
+
+String setUser(User user,String firstname,String lastname,String phone,String address);
+
+List<Ticket> userFindTicet(String dep,String des,String depdate,String qty);
+
+
+Transaction buyTicket_toQueue(int userid,int ticketid,String qty, int method); -> time = sys.time & status = 'p'
+
+Qurtz{
+	String buyTicket_toDatabase(Transaction transaction); -> sendEmail();
+}
+
+List<Transaction> findHistory(int userid);
+
+
