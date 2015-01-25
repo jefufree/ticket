@@ -33,10 +33,10 @@ public class User {
 	private String accountname;
 	private int sn;
 	
-	private Set<Transaction> transactions;
+	//private Set<Transaction> transactions;
 	
 	public User(){
-		transactions = new HashSet<Transaction>();
+		//transactions = new HashSet<Transaction>();
 	}
 	
 	
@@ -44,8 +44,8 @@ public class User {
 	public User(int userid, String username, String password, String firstname,
 			String lastname, String address, String phone, int enable,
 			String authority, String accountnum, String expiredate,
-			String accountname, int sn, Set<Transaction> transactions) {
-		super();
+			String accountname, int sn) {
+		
 		this.userid = userid;
 		this.username = username;
 		this.password = password;
@@ -59,7 +59,7 @@ public class User {
 		this.expiredate = expiredate;
 		this.accountname = accountname;
 		this.sn = sn;
-		this.transactions = transactions;
+	
 	}
 
 
@@ -159,7 +159,7 @@ public class User {
 		this.sn = sn;
 	}
 
-
+	/*
 	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="userid")
 	public Set<Transaction> getTransactions() {
@@ -168,5 +168,6 @@ public class User {
 	public void setTransactions(Set<Transaction> transactions) {
 		this.transactions = transactions;
 	}
+	*/
 	
 }

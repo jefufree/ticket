@@ -12,6 +12,7 @@ import com.mercury.ticket.persistence.model.Ticket;
 import com.mercury.ticket.persistence.model.Transaction;
 import com.mercury.ticket.persistence.model.User;
 import com.mercury.ticket.service.TicketService;
+import com.mercury.ticket.service.TransactionService;
 import com.mercury.ticket.service.UserService;
 
 @Controller
@@ -35,6 +36,15 @@ public class TicketController {
 		this.us = us;
 	}
 	
+	@Autowired
+	private TransactionService transs;
+	
+	public TransactionService getTranss() {
+		return transs;
+	}
+	public void setTranss(TransactionService transs) {
+		this.transs = transs;
+	}
 	@RequestMapping("/hello")
 	public String hello() {
 		return "hello";
@@ -70,17 +80,20 @@ public class TicketController {
 		u.setEnable(0);
 		u.setAuthority("USER_ROLE");
 		
-		t.getTransactions().add(trans);
-		u.getTransactions().add(trans);
+		//t.getTransactions().add(trans);
+		//u.getTransactions().add(trans);
 		
 		
 		String ss= us.updateUser(u);
 		String s= ts.updateTicket(t);
+		trans.setTid(t.getTid());
+		trans.setUserid(u.getUserid());
+		String sss=transs.updateTransaction(trans);
 		
 		
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("hello");
-		mav.addObject("msg", "Hello,welcome to Ticketing System!"+s+password+ss+dep);
+		mav.addObject("msg", "Hello,welcome to Ticketing System!"+s+password+ss+dep+sss);
 		
 		return mav;
 	}

@@ -30,16 +30,15 @@ public class Ticket {
 	private String depdate;
 	
 	
-	private Set<Transaction> transactions;
+	//private Set<Transaction> transactions;
 	
 	public Ticket(){
-		transactions = new HashSet<Transaction>();
+		//transactions = new HashSet<Transaction>();
 	}
 	
 	
 	public Ticket(int tid, String dep, String des, String price, int total,
-			int sold, int available, String deptime, String depdate,
-			Set<Transaction> transactions) {
+			int sold, int available, String deptime, String depdate) {
 		super();
 		this.tid = tid;
 		this.dep = dep;
@@ -50,7 +49,6 @@ public class Ticket {
 		this.available = available;
 		this.deptime = deptime;
 		this.depdate = depdate;
-		this.transactions = transactions;
 	}
 
 	
@@ -134,7 +132,7 @@ public class Ticket {
 
 
 	
-	
+	/*
 	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="tid")
 	public Set<Transaction> getTransactions() {
@@ -145,4 +143,5 @@ public class Ticket {
 	public void setTransactions(Set<Transaction> transactions) {
 		this.transactions = transactions;
 	}
+	*/
 }

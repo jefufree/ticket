@@ -16,20 +16,22 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="transactions")
 public class Transaction {
 	private int transactionid;
-	private Ticket ticket;
-	private User user;
+	//private Ticket ticket;
+	//private User user;
+	private int tid;
+	private int userid;
 	private int method;
 	private int quantity;
 	private String time;
 	private String status;
 	
 	public Transaction(){}
-	public Transaction(int transactionid, Ticket ticket, User user,
+	public Transaction(int transactionid, int tid, int userid,
 			int method, int quantity, String time, String status) {
 		super();
 		this.transactionid = transactionid;
-		this.ticket = ticket;
-		this.user = user;
+		this.tid = tid;
+		this.userid = userid;
 		this.method = method;
 		this.quantity = quantity;
 		this.time = time;
@@ -45,7 +47,7 @@ public class Transaction {
 	public void setTransactionid(int transactionid) {
 		this.transactionid = transactionid;
 	}
-	
+	/*
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="userid",insertable=false,updatable=false)
 	public User getUser() {
@@ -62,10 +64,7 @@ public class Transaction {
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
 	}
-	
-	
-	
-	
+	*/
 	
 	@Column
 	public int getMethod() {
@@ -74,6 +73,23 @@ public class Transaction {
 	public void setMethod(int method) {
 		this.method = method;
 	}
+	
+	@Column
+	public int getTid() {
+		return tid;
+	}
+	public void setTid(int tid) {
+		this.tid = tid;
+	}
+	
+	@Column
+	public int getUserid() {
+		return userid;
+	}
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+	
 	@Column
 	public int getQuantity() {
 		return quantity;
