@@ -1,12 +1,20 @@
 package com.mercury.ticket.persistence.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="users")
@@ -25,6 +33,37 @@ public class User {
 	private String accountname;
 	private int sn;
 	
+	private Set<Transaction> transactions;
+	
+	public User(){
+		transactions = new HashSet<Transaction>();
+	}
+	
+	
+	
+	public User(int userid, String username, String password, String firstname,
+			String lastname, String address, String phone, int enable,
+			String authority, String accountnum, String expiredate,
+			String accountname, int sn, Set<Transaction> transactions) {
+		super();
+		this.userid = userid;
+		this.username = username;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.address = address;
+		this.phone = phone;
+		this.enable = enable;
+		this.authority = authority;
+		this.accountnum = accountnum;
+		this.expiredate = expiredate;
+		this.accountname = accountname;
+		this.sn = sn;
+		this.transactions = transactions;
+	}
+
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_id")
 	@SequenceGenerator(name ="seq_id",sequenceName="seq_id",allocationSize=1,initialValue=1)
@@ -35,14 +74,14 @@ public class User {
 	public void setUserid(int userid) {
 		this.userid = userid;
 	}
-	@Column(nullable=false)
+	@Column
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	@Column(nullable=false)
+	@Column
 	public String getPassword() {
 		return password;
 	}
@@ -77,14 +116,14 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	@Column(nullable=false)
+	@Column
 	public int getEnable() {
 		return enable;
 	}
 	public void setEnable(int enable) {
 		this.enable = enable;
 	}
-	@Column(nullable=false)
+	@Column
 	public String getAuthority() {
 		return authority;
 	}
@@ -118,6 +157,16 @@ public class User {
 	}
 	public void setSn(int sn) {
 		this.sn = sn;
+	}
+
+
+	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="userid")
+	public Set<Transaction> getTransactions() {
+		return transactions;
+	}
+	public void setTransactions(Set<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 	
 }

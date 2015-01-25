@@ -1,10 +1,16 @@
 package com.mercury.ticket.persistence.model;
 
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -13,16 +19,43 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="tickets")
 public class Ticket {
 	private int tid;
-	private String train;
+	
 	private String dep;
 	private String des;
 	private String price;
 	private int total;
-	private int available;
 	private int sold;
+	private int available;
 	private String deptime;
+	private String depdate;
 	
-	public Ticket(){}
+	
+	private Set<Transaction> transactions;
+	
+	public Ticket(){
+		transactions = new HashSet<Transaction>();
+	}
+	
+	
+	public Ticket(int tid, String dep, String des, String price, int total,
+			int sold, int available, String deptime, String depdate,
+			Set<Transaction> transactions) {
+		super();
+		this.tid = tid;
+		this.dep = dep;
+		this.des = des;
+		this.price = price;
+		this.total = total;
+		this.sold = sold;
+		this.available = available;
+		this.deptime = deptime;
+		this.depdate = depdate;
+		this.transactions = transactions;
+	}
+
+	
+
+
 	@Id
     @GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy="increment")
@@ -35,11 +68,11 @@ public class Ticket {
 	}
 	
 	@Column
-	public String getTrain() {
-		return train;
+	public String getDepdate() {
+		return depdate;
 	}
-	public void setTrain(String train) {
-		this.train = train;
+	public void setDepdate(String depdate) {
+		this.depdate = depdate;
 	}
 	
 	@Column
@@ -48,14 +81,6 @@ public class Ticket {
 	}
 	public void setDep(String dep) {
 		this.dep = dep;
-	}
-	
-	@Column
-	public String getDes() {
-		return des;
-	}
-	public void setDes(String des) {
-		this.des = des;
 	}
 	
 	@Column
@@ -91,11 +116,33 @@ public class Ticket {
 	}
 	
 	@Column
+	public String getDes() {
+		return des;
+	}
+	public void setDes(String des) {
+		this.des = des;
+	}
+	
+
+	@Column
 	public String getDeptime() {
 		return deptime;
 	}
 	public void setDeptime(String deptime) {
 		this.deptime = deptime;
 	}
+
+
 	
+	
+	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="tid")
+	public Set<Transaction> getTransactions() {
+		return transactions;
+	}
+
+
+	public void setTransactions(Set<Transaction> transactions) {
+		this.transactions = transactions;
+	}
 }

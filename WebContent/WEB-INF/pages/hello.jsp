@@ -7,11 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<p>${msg}</p>
 	<form action="result.html" method="post">
-		<!-- 
+		 
 		<p>
-			tid : <input type="text" name="tid" />
-		</p> -->
+			password : <input type="text" name="password" />
+		</p>
 		<p>
 			dep : <input type="text" name="dep" />
 		</p>

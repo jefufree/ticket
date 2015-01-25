@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.ticket.persistence.model.Ticket;
+import com.mercury.ticket.persistence.model.Transaction;
+import com.mercury.ticket.persistence.model.User;
 import com.mercury.ticket.service.TicketService;
+import com.mercury.ticket.service.UserService;
 
 @Controller
 @SessionAttributes
@@ -23,11 +26,14 @@ public class TicketController {
 	public void setTs(TicketService ts) {
 		this.ts = ts;
 	}
-	/*
-	@RequestMapping("/hello")
-	public String goHello(){
-		return "hello";
-	}*/
+	@Autowired
+	private UserService us;
+	public UserService getUs() {
+		return us;
+	}
+	public void setUs(UserService us) {
+		this.us = us;
+	}
 	
 	@RequestMapping("/hello")
 	public String hello() {
@@ -37,12 +43,18 @@ public class TicketController {
 	
 	@RequestMapping("/result")
 	public ModelAndView sayHello(HttpServletRequest request){
-		
+		User u=new User();
 		Ticket t=new Ticket();
+		Transaction trans=new Transaction();
+		trans.setMethod(0);
+		trans.setQuantity(1);
+		trans.setTime(String.valueOf(System.nanoTime()));
+		trans.setStatus("p");
+		
+		String password = request.getParameter("password");
 		//int tid=Integer.parseInt(request.getParameter("tid"));
 		String dep = request.getParameter("dep");
-		//t.setTid(tid);
-		t.setTrain("123");
+		
 		t.setDep(dep);
 		t.setDes("plainsboro");
 		t.setPrice("120");
@@ -51,13 +63,24 @@ public class TicketController {
 		t.setAvailable(20);
 		t.setSold(100);
 		t.setTotal(120);
-		t.setDeptime("5pmDec12th");
+		t.setDeptime("5pm");
+		t.setDepdate("Dec12th");
+		u.setUsername("j");
+		u.setPassword(password);
+		u.setEnable(0);
+		u.setAuthority("USER_ROLE");
+		
+		t.getTransactions().add(trans);
+		u.getTransactions().add(trans);
+		
+		
+		String ss= us.updateUser(u);
 		String s= ts.updateTicket(t);
 		
 		
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("hello");
-		mav.addObject("msg", "Hello,welcome to Ticketing System!"+s+dep);
+		mav.addObject("msg", "Hello,welcome to Ticketing System!"+s+password+ss+dep);
 		
 		return mav;
 	}

@@ -8,30 +8,27 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mercury.common.db.HibernateDao;
-import com.mercury.ticket.persistence.model.Ticket;
-
+import com.mercury.ticket.persistence.model.User;
 
 @Service
 @Transactional
-public class TicketService {
+public class UserService {
 	@Autowired
-	@Qualifier("ticketDao")
-	private HibernateDao<Ticket,Integer> hd;
+	@Qualifier("userDao")
+	private HibernateDao<User,Integer> hd;
 
-	public HibernateDao<Ticket, Integer> getHd() {
+	public HibernateDao<User, Integer> getHd() {
 		return hd;
 	}
 
-	public void setHd(HibernateDao<Ticket, Integer> hd) {
+	public void setHd(HibernateDao<User, Integer> hd) {
 		this.hd = hd;
 	}
-	public List<Ticket> getAllTickets(){
+	public List<User> getAllUsers(){
 		return hd.findAll();
 	}
-	public String updateTicket(Ticket ticket){
-		hd.save(ticket);
+	public String updateUser(User user){
+		hd.save(user);
 		return "Succeed";
 	}
-	
-	
 }
