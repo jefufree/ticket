@@ -10,6 +10,9 @@ String setTicketPrice(Ticket ticket,String price);
 String setTIcketTotal(Ticket ticket,int total );
 String setTicketDate(Ticket ticket,String date);
 String setTicketTime(Ticket ticket,String time);
+String setTicketDep(Ticket ticket, String dep);
+String setTicketDes(Ticket ticket, String des);
+
 
 User:
 User findUser(String username);
@@ -23,6 +26,8 @@ String setCard(User user,String accountnum,String expiredate, String accountname
 
 String setUser(User user,String firstname,String lastname,String phone,String address);
 
+
+Ticket
 List<Ticket> userFindTicet(String dep,String des,String depdate,String qty);
 Use HibernateDao.findAllBy4(...);
 
