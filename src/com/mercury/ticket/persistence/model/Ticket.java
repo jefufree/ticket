@@ -12,11 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="tickets")
+@Table(name="Tickets")
+@XmlRootElement
 public class Ticket {
 	private int tid;
 	
@@ -50,14 +53,12 @@ public class Ticket {
 		this.deptime = deptime;
 		this.depdate = depdate;
 	}
-
 	
-
-
 	@Id
     @GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy="increment")
     @Column(nullable = false)
+	@XmlElement(name="Ticket ID")
 	public int getTid() {
 		return tid;
 	}
@@ -66,14 +67,7 @@ public class Ticket {
 	}
 	
 	@Column
-	public String getDepdate() {
-		return depdate;
-	}
-	public void setDepdate(String depdate) {
-		this.depdate = depdate;
-	}
-	
-	@Column
+	@XmlElement(name="Depature")
 	public String getDep() {
 		return dep;
 	}
@@ -82,6 +76,34 @@ public class Ticket {
 	}
 	
 	@Column
+	@XmlElement(name="Destination")
+	public String getDes() {
+		return des;
+	}
+	public void setDes(String des) {
+		this.des = des;
+	}
+	
+	@Column
+	@XmlElement(name="Date")
+	public String getDepdate() {
+		return depdate;
+	}
+	public void setDepdate(String depdate) {
+		this.depdate = depdate;
+	}
+	
+	@Column
+	@XmlElement(name="Time")
+	public String getDeptime() {
+		return deptime;
+	}
+	public void setDeptime(String deptime) {
+		this.deptime = deptime;
+	}
+	
+	@Column
+	@XmlElement(name="Price")
 	public String getPrice() {
 		return price;
 	}
@@ -90,6 +112,7 @@ public class Ticket {
 	}
 	
 	@Column
+	@XmlElement(name="Total")
 	public int getTotal() {
 		return total;
 	}
@@ -98,14 +121,7 @@ public class Ticket {
 	}
 	
 	@Column
-	public int getAvailable() {
-		return available;
-	}
-	public void setAvailable(int available) {
-		this.available = available;
-	}
-	
-	@Column
+	@XmlElement(name="Sold")
 	public int getSold() {
 		return sold;
 	}
@@ -114,23 +130,13 @@ public class Ticket {
 	}
 	
 	@Column
-	public String getDes() {
-		return des;
+	@XmlElement(name="Available")
+	public int getAvailable() {
+		return available;
 	}
-	public void setDes(String des) {
-		this.des = des;
+	public void setAvailable(int available) {
+		this.available = available;
 	}
-	
-
-	@Column
-	public String getDeptime() {
-		return deptime;
-	}
-	public void setDeptime(String deptime) {
-		this.deptime = deptime;
-	}
-
-
 	
 	/*
 	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
