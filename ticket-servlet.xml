@@ -14,10 +14,10 @@
     	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	 	
 	<tx:annotation-driven />
-	<context:component-scan base-package="com.mercury.ticket"></context:component-scan>		
+	<context:component-scan base-package="com.mercury.ticket"/>		
 	<mvc:annotation-driven/>
 	
-	    <mvc:interceptors>
+	<mvc:interceptors>
         <bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
         	<property name="cacheSeconds" value="0"/>
      		<property name="useExpiresHeader" value="false"/>
