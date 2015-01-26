@@ -44,3 +44,7 @@ status varchar2(1),
 primary key (transactionid),
 foreign key (tid) references tickets(tid),
 foreign key (userid) references users(userid));
+
+4. Change password to 32b
+alter table users
+modify password varchar2(32);
