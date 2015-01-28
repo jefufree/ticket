@@ -58,7 +58,7 @@ public class Ticket {
     @GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy="increment")
     @Column(nullable = false)
-	@XmlElement(name="Ticket ID")
+	//@XmlElement(name="TicketID")
 	public int getTid() {
 		return tid;
 	}
@@ -67,7 +67,7 @@ public class Ticket {
 	}
 	
 	@Column
-	@XmlElement(name="Depature")
+	//@XmlElement(name="Depature")
 	public String getDep() {
 		return dep;
 	}
@@ -76,7 +76,7 @@ public class Ticket {
 	}
 	
 	@Column
-	@XmlElement(name="Destination")
+	//@XmlElement(name="Destination")
 	public String getDes() {
 		return des;
 	}
@@ -85,7 +85,7 @@ public class Ticket {
 	}
 	
 	@Column
-	@XmlElement(name="Date")
+	//@XmlElement(name="Date")
 	public String getDepdate() {
 		return depdate;
 	}
@@ -94,7 +94,7 @@ public class Ticket {
 	}
 	
 	@Column
-	@XmlElement(name="Time")
+	//@XmlElement(name="Time")
 	public String getDeptime() {
 		return deptime;
 	}
@@ -103,7 +103,7 @@ public class Ticket {
 	}
 	
 	@Column
-	@XmlElement(name="Price")
+	//@XmlElement(name="Price")
 	public String getPrice() {
 		return price;
 	}
@@ -112,7 +112,7 @@ public class Ticket {
 	}
 	
 	@Column
-	@XmlElement(name="Total")
+	//@XmlElement(name="Total")
 	public int getTotal() {
 		return total;
 	}
@@ -121,7 +121,7 @@ public class Ticket {
 	}
 	
 	@Column
-	@XmlElement(name="Sold")
+	//@XmlElement(name="Sold")
 	public int getSold() {
 		return sold;
 	}
@@ -130,7 +130,7 @@ public class Ticket {
 	}
 	
 	@Column
-	@XmlElement(name="Available")
+	//@XmlElement(name="Available")
 	public int getAvailable() {
 		return available;
 	}
