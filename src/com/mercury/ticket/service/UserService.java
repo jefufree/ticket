@@ -16,7 +16,7 @@ public class UserService {
 	@Autowired
 	@Qualifier("userDao")
 	private HibernateDao<User,Integer> hd;
-
+	/*
 	public HibernateDao<User, Integer> getHd() {
 		return hd;
 	}
@@ -24,6 +24,7 @@ public class UserService {
 	public void setHd(HibernateDao<User, Integer> hd) {
 		this.hd = hd;
 	}
+	*/
 	public List<User> getAllUsers(){
 		return hd.findAll();
 	}

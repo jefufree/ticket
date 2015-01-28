@@ -16,7 +16,7 @@ public class TransactionService {
 		@Autowired
 		@Qualifier("transactionDao")
 		private HibernateDao<Transaction,Integer> hd;
-
+		/*
 		public HibernateDao<Transaction, Integer> getHd() {
 			return hd;
 		}
@@ -24,6 +24,7 @@ public class TransactionService {
 		public void setHd(HibernateDao<Transaction, Integer> hd) {
 			this.hd = hd;
 		}
+		*/
 		public List<Transaction> getAllTransaction(){
 			return hd.findAll();
 		}

@@ -1,5 +1,8 @@
 package com.mercury.ticket.web.controller;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import com.mercury.ticket.persistence.model.User;
 import com.mercury.ticket.service.TicketService;
 import com.mercury.ticket.service.TransactionService;
 import com.mercury.ticket.service.UserService;
+import com.mercury.ticket.util.TransactionQueue;
 
 @Controller
 @SessionAttributes
@@ -48,6 +52,15 @@ public class TicketController {
 	@RequestMapping("/hello")
 	public String hello() {
 		return "hello";
+	}
+	
+	@RequestMapping("/showtransactionlist")
+	public ModelAndView showTransactionList(){
+		List<Transaction> l=transs.getAllTransaction();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("hello");
+		mav.addObject("list",l);
+		return mav;
 	}
 	
 	
@@ -90,12 +103,56 @@ public class TicketController {
 		trans.setUserid(u.getUserid());
 		String sss=transs.updateTransaction(trans);
 		
-		
+		List<Transaction> l=transs.getAllTransaction();
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("hello");
 		mav.addObject("msg", "Hello,welcome to Ticketing System!"+s+password+ss+dep+sss);
-		
+		mav.addObject("list",l);
 		return mav;
 	}
+	
+	@RequestMapping("/buyticket")
+	public String buyTicket() {
+		return "buyticket";
+	}
+	@RequestMapping("/usersearch")
+	public ModelAndView userSearch(HttpServletRequest request){
+		String dep=request.getParameter("dep");
+		String des=request.getParameter("des");
+		String depdate=request.getParameter("depdate");
+		int quantity=Integer.parseInt(request.getParameter("quantity"));
+		
+		List<Ticket> l=ts.userFindTicket(dep, des, depdate, quantity);
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("buyticket");
+		mav.addObject("msg", dep+" "+des+" "+depdate+" "+quantity);
+		mav.addObject("list",l);
+		mav.addObject("quantity",quantity);
+		return mav;
+		
+	}
+	
+	@RequestMapping("/buying")
+	public ModelAndView buying(HttpServletRequest request){
+		
+		
+		ModelAndView mav=new ModelAndView();
+		
+		int userid = 3763;
+		//int tid = Integer.parseInt(request.getParameter("tid"));
+		int tid=4;
+		//int quantity = Integer.parseInt(request.getParameter("qty"));
+		int quantity=3;
+		int method = 0;
+		LinkedList<Transaction> q=TransactionQueue.getTransactionQueue();
+		System.out.println(TransactionQueue.size());
+		Transaction trans=ts.buyTicketEnqueue(userid, tid, quantity, method);
+		System.out.println(TransactionQueue.size());
+		
+		mav.setViewName("buyticket");
+		mav.addObject("trans", trans);
+		return mav;
+	}
+	
 	
 }
