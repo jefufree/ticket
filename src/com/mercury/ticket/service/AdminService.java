@@ -26,10 +26,10 @@ public class AdminService {
 		return list.get(0);
 	}
 	
-	public String addNewTicket(String dep,String des){
-		//if(hd.findAllBy4("dep", dep, "des", des,"date","0","time","0").size()!=0){
-		//	return "Already exist, you can modify it directly.";
-		//}
+	public Ticket addNewTicket(String dep,String des){
+		if(findTicket(dep,  des,"0","0")!=null){
+			return null;
+		}
 		Ticket t = new Ticket();
 		t.setDep(dep);
 		t.setDes(des);
@@ -38,51 +38,52 @@ public class AdminService {
 		t.setTotal(0);
 		t.setAvailable(-1);
 		hd.save(t);
-		return "New ticket: " + dep +" ---> " + des+" added!";
+		return t;
+				
 	}
 	
 	public List<Ticket> findAllTicket(){
 		return hd.findAll();
 	}
 	
-	public String setTicketDep(Ticket ticket, String dep){
+	public Ticket setTicketDep(Ticket ticket, String dep){
 		ticket.setDep(dep);
 		hd.save(ticket);
-		return "Ticket No."+ticket.getTid()+" departure is changed to "+ticket.getDep();
+		return ticket;
 	}
-	public String setTicketDes(Ticket ticket, String des){
-		ticket.setDep(des);
+	public Ticket setTicketDes(Ticket ticket, String des){
+		ticket.setDes(des);
 		hd.save(ticket);
-		return "Ticket No."+ticket.getTid()+" destination is changed to "+ticket.getDes();
+		return ticket;
 	}
-	public String setTicketPrice(Ticket ticket,String price){
+	public Ticket setTicketPrice(Ticket ticket,String price){
 		ticket.setPrice(price);
 		hd.save(ticket);
-		return "Ticket No."+ticket.getTid()+" price is changed to "+ticket.getPrice();
+		return ticket;
 	}
-	public String setTicketTotal(Ticket ticket,int total ){
+	public Ticket setTicketTotal(Ticket ticket,int total ){
 		ticket.setTotal(total);
 		hd.save(ticket);
-		return "Ticket No."+ticket.getTid()+" total is changed to "+ticket.getTotal();
+		return ticket;
 	}
-	public String setTicketDate(Ticket ticket,String date){
+	public Ticket setTicketDate(Ticket ticket,String date){
 		ticket.setDepdate(date);
 		hd.save(ticket);
-		return "Ticket No."+ticket.getTid()+"date is changed to "+ticket.getDepdate();
+		return ticket;
 	}
-	public String setTicketTime(Ticket ticket,String time){
+	public Ticket setTicketTime(Ticket ticket,String time){
 		ticket.setDeptime(time);
 		hd.save(ticket);
-		return "Ticket No."+ticket.getTid()+"time is changed to "+ticket.getDeptime();
+		return ticket;
 	}
-	public String setTicketDisable(Ticket ticket){
+	public Ticket setTicketDisable(Ticket ticket){
 		ticket.setAvailable(-1);
 		hd.save(ticket);
-		return "Ticket No."+ticket.getTid()+"is no longer available!";
+		return ticket;
 	}
-	public String setAvailable(Ticket ticket, int available){
+	public Ticket setAvailable(Ticket ticket, int available){
 		ticket.setAvailable(available);
 		hd.save(ticket);
-		return "Ticket No."+ticket.getTid()+" has "+ ticket.getAvailable()+" left.";
+		return ticket;
 	}
 }

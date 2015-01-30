@@ -29,107 +29,109 @@ public class AdminRescources {
 
 	@GET
 	@Path("/save")
-	@Produces({MediaType.TEXT_PLAIN})
-	public String saveTicket(@QueryParam("dep") String dep,@QueryParam("des") String des){
+	@Produces({MediaType.APPLICATION_JSON})
+	public Ticket saveTicket(@QueryParam("dep") String dep,@QueryParam("des") String des){
 		return as.addNewTicket(dep, des);
 	}
 
 	@GET
 	@Path("/setprice")
-	@Produces({MediaType.TEXT_PLAIN})
-	public String setPrice(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text") String price){
+	@Produces({MediaType.APPLICATION_JSON})
+	public Ticket setPrice(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text") String price){
 		Ticket t = as.findTicket(dep, des, date , time);
-		if(t==null) return "This Ticket doesn't exist.";
-		if(t.getSold()!=0){
+		if(t==null) return null;
+		if(t.getSold()==0){
 			return as.setTicketPrice(t, price);
 		}
 		else{
-			return "This ticket can not be modified.Please add new ticket";
+			return null;
 		}
 		
 	}
 	
 	@GET
 	@Path("/setdep")
-	@Produces({MediaType.TEXT_PLAIN})
-	public String setDep(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text") String newDep){
+	@Produces({MediaType.APPLICATION_JSON})
+	public Ticket setDep(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text") String newDep){
 		Ticket t = as.findTicket(dep, des, date , time);
-		if(t==null) return "This Ticket doesn't exist.";
-		if(t.getSold()!=0){
+		if(t==null) return null;
+		if(t.getSold()==0){
 			return as.setTicketDep(t, newDep);
 		}
 		else{
-			return "This ticket can not be modified.Please add new ticket";
+			return null;
 		}		
 	}
 	
 	@GET
 	@Path("/setdes")
-	@Produces({MediaType.TEXT_PLAIN})
-	public String setDes(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text") String newDes){
+	@Produces({MediaType.APPLICATION_JSON})
+	public Ticket setDes(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text") String newDes){
 		Ticket t = as.findTicket(dep, des, date , time);
-		if(t==null) return "This Ticket doesn't exist.";
-		if(t.getSold()!=0){
+		if(t==null) return null;
+		if(t.getSold()==0){
 			return as.setTicketDes(t, newDes);
 		}
 		else{
-			return "This ticket can not be modified.Please add new ticket";
+			return null;
 		}		
 	}
 	
 	@GET
 	@Path("/settotal")
-	@Produces({MediaType.TEXT_PLAIN})
-	public String setTotal(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text") int total){
+	@Produces({MediaType.APPLICATION_JSON})
+	public Ticket setTotal(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text") int total){
 		Ticket t = as.findTicket(dep, des, date , time);
-		if(t==null) return "This Ticket doesn't exist.";
-		as.setAvailable(t, total-t.getSold());
+		if(t==null) return null;
+		if(t.getAvailable()!=-1){
+			as.setAvailable(t, total-t.getSold());
+		}		
 		return as.setTicketTotal(t, total);
 	}
 	
 	@GET
 	@Path("/setdate")
-	@Produces({MediaType.TEXT_PLAIN})
-	public String setDate(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text") String newDate){
+	@Produces({MediaType.APPLICATION_JSON})
+	public Ticket setDate(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text") String newDate){
 		Ticket t = as.findTicket(dep, des, date , time);
-		if(t==null) return "This Ticket doesn't exist.";
-		if(t.getSold()!=0){
+		if(t==null) return null;
+		if(t.getSold()==0){
 			return as.setTicketDate(t, newDate);
 		}
 		else{
-			return "This ticket can not be modified.Please add new ticket.";
+			return null;
 		}		
 	}
 	
 	@GET
 	@Path("/settime")
-	@Produces({MediaType.TEXT_PLAIN})
-	public String setTime(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text")String newTime){
+	@Produces({MediaType.APPLICATION_JSON})
+	public Ticket setTime(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time,@QueryParam("text")String newTime){
 		Ticket t = as.findTicket(dep, des, date , time);
-		if(t==null) return "This Ticket doesn't exist.";
-		if(t.getSold()!=0){
+		if(t==null) return null;
+		if(t.getSold()==0){
 			return as.setTicketTime(t, newTime);
 		}
 		else{
-			return "This ticket can not be modified.Please add new ticket.";
+			return null;
 		}		
 	}
 
 	@GET
 	@Path("/disable")
-	@Produces({MediaType.TEXT_PLAIN})
-	public String setDisable(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time){
+	@Produces({MediaType.APPLICATION_JSON})
+	public Ticket setDisable(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time){
 		Ticket t = as.findTicket(dep, des, date , time);
-		if(t==null) return "This Ticket doesn't exist.";
+		if(t==null) return null;
 		return as.setTicketDisable(t);				
 	}
 
 	@GET
 	@Path("/enable")
-	@Produces({MediaType.TEXT_PLAIN})
-	public String setAvailable(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time){
+	@Produces({MediaType.APPLICATION_JSON})
+	public Ticket setAvailable(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("time") String time){
 		Ticket t = as.findTicket(dep, des, date , time);
-		if(t==null) return "This Ticket doesn't exist.";
+		if(t==null) return null;
 		return as.setAvailable(t, t.getTotal()-t.getSold());
 	}
 	
