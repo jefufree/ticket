@@ -5,12 +5,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admin Page</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script>
 	$(document).ready(function(){
 		$("#list").hide();
 		$(".set").prop('disabled',true);
+		$("#save_tickets").click(function(){
+			$.ajax({
+				url:"http://localhost:8080/Ticket/rest/admin/save",
+				type:"get",
+				data:{
+					dep:$("#dep_input").val(),
+					des:$("#des_input").val()
+				},	
+				dataType:"json",		
+				success:showTicket
+			});		
+		});
+
 		$("#findAll").click(function(){
 			$("#ack").html("");
 			$.ajax({
@@ -20,21 +36,6 @@
 				success:showAllTicket
 			});
 		});
-		
-		$("#addnew").click(function(){
-			$.ajax({
-				url:"http://localhost:8080/Ticket/rest/admin/save",
-				type:"get",
-				data:{
-					dep:$("#dep").val(),
-					des:$("#des").val()
-				},	
-				dataType:"json",		
-				success:showTicket
-			});
-			return false;			
-		});
-		
 		$("#disable").click(function(){
 			$.ajax({
 				url:"http://localhost:8080/Ticket/rest/admin/disable",
@@ -110,21 +111,34 @@
 			var rx1 = /^([2-9]\d{3}((0[1-9]|1[012])(0[1-9]|1\d|2[0-8])|(0[13456789]|1[012])(29|30)|(0[13578]|1[02])31)|(([2-9]\d)(0[48]|[2468][048]|[13579][26])|(([2468][048]|[3579][26])00))0229)$/gi;
 			var resultD = rx1.test(inputDate);
 			$("#dateCheck").text(resultD);
-			if(($("#dateCheck").text()=="true")&&($("#timeCheck").text()=="true")){
-				$(".set").prop('disabled',false);
-			}else{
-				$(".set").prop('disabled',true);
-			}
 		});
 		$("#time").keyup(function(){			
 			var inputTime = $("#time").val();
 			var rx2 =/^(([0-1][0-9])|([1-2][0-3]))([0-5][0-9])$/gi;
 			var resultT = rx2.test(inputTime);
 			$("#timeCheck").text(resultT);
-			if(($("#dateCheck").text()=="true")&&($("#timeCheck").text()=="true")){
-				$(".set").prop('disabled',false);
-			}else{
-				$(".set").prop('disabled',true);
+		});
+		$("#text").keyup(function(){			
+			var newVal = $("#text").val();
+			var rx1 = /^([2-9]\d{3}((0[1-9]|1[012])(0[1-9]|1\d|2[0-8])|(0[13456789]|1[012])(29|30)|(0[13578]|1[02])31)|(([2-9]\d)(0[48]|[2468][048]|[13579][26])|(([2468][048]|[3579][26])00))0229)$/gi;
+			var rx2 = /^(([0-1][0-9])|([1-2][0-3]))([0-5][0-9])$/gi;
+			if(($("#dateCheck").text()=="true")&&($("#timeCheck").text()=="true")){				
+				if($.isNumeric($("#text").val())){
+					$(".set").prop('disabled',false);
+					if(!rx2.test(newVal)){
+						$("#settime").prop('disabled',true);
+					}
+					if(!rx1.test(newVal)){
+						$("#setdate").prop('disabled',true);
+					}
+				}else if(!newVal){
+					$(".set").prop('disabled',true);
+				}else{
+					$("#setdep").prop('disabled',false);
+					$("#setdes").prop('disabled',false);
+					$("#settotal").prop('disabled',false);
+					$("#setprice").prop('disabled',false);
+				}				
 			}
 		});
 	});
@@ -150,7 +164,7 @@
 	}
 	function showTicket(data){
 		if(data==null){
-			$("#ack").html("Ticket doesn't exist, or can not be modified!");
+			$("#ack").html("Illigal ");
 			}
 		else{
 			var rows ="";
@@ -184,18 +198,27 @@
 		$("#des").val($("tr:nth-child("+line+") td:nth-child(3)").html());
 		$("#date").val($("tr:nth-child("+line+") td:nth-child(4)").html());
 		$("#time").val($("tr:nth-child("+line+") td:nth-child(5)").html());
+		var ave = $("tr:nth-child("+line+") td:nth-child(9)").html();
+		$("#dateCheck").text("true");
+		$("#timeCheck").text("true");
+		if(ave!=-1){
+			$(".set").hide();
+			$("#settotal").show();
+		}else{
+			$(".set").show();
+		}	
 	}
 </script>
 </head>
 <body ng-app>
 	<button type="submit" id="findAll">Show All Tickets</button>
-	<button type="button" id="addnew">Add new ticket</button>
+	<button type="button" id="addnew"  data-target="#myModal" data-toggle="modal">Add new ticket</button>
 	
 	
 	<p>Search and modify:</p>
 	<p>Departure : <input type="text" id="dep" name="dep"/></p>
 	<p>Destination : <input type="text" id="des" name="des"/></p>
-	<p>Date : <input type="text" id="date" placeholder="YYYYMMDD"/><div id="dateCheck"></div></p>
+	<p>Date : <input type="text" id="date" placeholder="YYYYMMDD"/></p><p id="dateCheck"></p>
 	<p>Time : <input type="text" id="time" placeholder="HHMM"/><div id="timeCheck"></div></p>
 	<p>New Value : <input type="text" id="text" /></p>
 		
@@ -233,6 +256,33 @@
 		</tr>
 		<tbody id="tickets"></tbody>
 	</table>
+	<div class="modal fade" id="myModal" >
+<div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+          <h3 class="modal-title">All Tickets</h3>
+        </div>
+        <div class="modal-body">
+        	<form>
+	          <div class="form-group">
+	            <label for="recipient-name" class="control-label">dep:</label>
+	            <input type="text" class="form-control" id="dep_input"/>
+	          </div>
+	          <div class="form-group">
+	            <label for="message-text" class="control-label">des:</label>
+	            <input type="text" class="form-control" id="des_input"/>
+	          </div>
+        </form>
+		</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id="save_tickets" >Save Tickets</button>
+        </div>
+				
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 	
 </body>
 </html>
