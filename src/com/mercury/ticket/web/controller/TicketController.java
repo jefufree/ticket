@@ -49,6 +49,16 @@ public class TicketController {
 	public void setTranss(TransactionService transs) {
 		this.transs = transs;
 	}
+	//----------------------------------------------------
+	//----------------------------------------------------
+	
+	@RequestMapping("/ticket-admin")
+	public String ticketAdmin(){
+		return "ticket-admin";
+	}
+	
+	//----------------------------------------------------
+		//----------------------------------------------------
 	@RequestMapping("/hello")
 	public String hello() {
 		return "hello";
@@ -97,7 +107,7 @@ public class TicketController {
 		//u.getTransactions().add(trans);
 		
 		
-		String ss= us.updateUser(u);
+		User ss= us.updateUser(u);
 		String s= ts.updateTicket(t);
 		trans.setTid(t.getTid());
 		trans.setUserid(u.getUserid());
@@ -111,6 +121,8 @@ public class TicketController {
 		return mav;
 	}
 	
+	//----------------------------------------------------
+	//----------------------------------------------------
 	@RequestMapping("/buyticket")
 	public String buyTicket() {
 		return "buyticket";
@@ -142,7 +154,7 @@ public class TicketController {
 		//int tid = Integer.parseInt(request.getParameter("tid"));
 		int tid=4;
 		//int quantity = Integer.parseInt(request.getParameter("qty"));
-		int quantity=3;
+		int quantity=1;
 		int method = 0;
 		LinkedList<Transaction> q=TransactionQueue.getTransactionQueue();
 		System.out.println(TransactionQueue.size());
@@ -154,5 +166,17 @@ public class TicketController {
 		return mav;
 	}
 	
+	//----------------------------------------------------
+	//----------------------------------------------------
+	@RequestMapping("/user-ticket")
+	public String userTicket() {
+		return "user-ticket";
+	}
+	//----------------------------------------------------
+		//----------------------------------------------------
+	@RequestMapping("/preloader")
+	public String preloader() {
+		return "preloader";
+	}
 	
 }

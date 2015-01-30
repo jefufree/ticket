@@ -1,5 +1,6 @@
 package com.mercury.ticket.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -59,6 +60,10 @@ public class TicketService {
     	System.out.println( sdf.format(cal.getTime()) );
 		*/
 		Date date = new Date();
+		SimpleDateFormat ft = 
+			      new SimpleDateFormat ("yyyyMMddhhmmss");
+		
+		
 		Transaction trans=new Transaction();
 		
 		trans.setTid(tid);
@@ -66,7 +71,7 @@ public class TicketService {
 		trans.setQuantity(quantity);
 		trans.setMethod(method);
 		trans.setStatus("p");
-		trans.setTime(date.toString());
+		trans.setTime(ft.format(date));
 		TransactionQueue.add(trans);
 		return trans;
 	}
@@ -82,9 +87,29 @@ public class TicketService {
 			t.setSold(t.getSold()+quantity);
 			hd.save(t);
 			hd2.save(trans);
-			s=trans.getUserid()+" "+trans.getTid()+"Succeed";
+			s=trans.getUserid()+" "+trans.getTid()+trans.getStatus()+"Succeed";
 		}
 		return s;
 	}
 	
+	public List<Transaction> findHistory(int userid){
+		return hd2.findAllBy("userid", userid);
+	}
+	
+	public String removeTicket(int transactionid,int tid,int quantity){
+		Transaction trans=hd2.findBy("transactionid", transactionid);
+		Ticket t=hd.findBy("tid", tid);
+		t.setSold(t.getSold()-quantity);
+		t.setAvailable(t.getAvailable()+quantity);
+		hd.save(t);
+		Transaction newtrans=new Transaction();
+		newtrans.setMethod(trans.getMethod());
+		newtrans.setQuantity(quantity);
+		newtrans.setStatus("r");
+		newtrans.setTid(tid);
+		newtrans.setUserid(trans.getUserid());
+		hd2.save(newtrans);
+		
+		return "ticket has been returned";
+	}
 }
