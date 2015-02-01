@@ -27,14 +27,14 @@ public class AdminService {
 	}
 	
 	public Ticket addNewTicket(String dep,String des){
-		if(findTicket(dep,  des,"0","0")!=null){
+		if(findTicket(dep,  des,"20000101","0000")!=null){
 			return null;
 		}
 		Ticket t = new Ticket();
 		t.setDep(dep);
 		t.setDes(des);
-		t.setDepdate("0");
-		t.setDeptime("0");
+		t.setDepdate("20000101");
+		t.setDeptime("0000");
 		t.setTotal(0);
 		t.setAvailable(-1);
 		hd.save(t);
