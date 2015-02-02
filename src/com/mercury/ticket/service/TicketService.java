@@ -1,6 +1,7 @@
 package com.mercury.ticket.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class TicketService {
 	private HibernateDao<Transaction,Integer> hd2;
 	
 	public List<Ticket> getAllTickets(){
-		return hd.findAll();
+		return hd.findAlllt("available", 0);
 	}
 	public String updateTicket(Ticket ticket){
 		hd.save(ticket);
@@ -44,11 +45,38 @@ public class TicketService {
 	public List<Ticket> userFindTicket(String dep,String des,String depdate,int quantity){
 		List<Ticket> l=null;
 		
-		l=hd.findAllBy3("dep", dep, "des", des, "depdate", depdate);
-		for(Ticket t:l){
-			if(t.getAvailable()<quantity) l.remove(t);
+		
+		if(dep==null){
+			if(des==null){
+				l=hd.findAllBy("depdate", depdate);
+			}else{
+				if(depdate==null){
+					l=hd.findAllBy("des", des);
+				}else{
+					l=hd.findAllBy2("des", des, "depdate", depdate);
+				}
+			}
+		}else{
+			if(des==null){
+				if(depdate==null){
+					l=hd.findAllBy("dep", dep);
+				}else{
+					l=hd.findAllBy2("dep", dep, "depdate", depdate);
+				}
+			}else{
+				if(depdate==null){
+					l=hd.findAllBy2("dep", dep, "des", des);
+				}else{
+					l=hd.findAllBy3("dep", dep, "des", des, "depdate", depdate);
+				}
+			}
 		}
-		return l;
+		List<Ticket> l2=new ArrayList<Ticket>();
+		
+		for(Ticket t:l){
+			if(t.getAvailable()>=quantity) l2.add(t);
+		}
+		return l2;
 	}
 	
 	public Transaction buyTicketEnqueue(int userid,int tid,int quantity,int method){

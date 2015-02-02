@@ -55,6 +55,7 @@ $('document').ready(function(){
 				tid:$("#tid").val(),
 				userid:$("#userid").val(),
 				method:$("#method").val(),
+				quantity2:$("#quantity2").val(),
 			},
 			dataType:"json",
 			success:showTransaction
@@ -96,8 +97,9 @@ function showAllTicket(data){
 		$("#dep").val($("tr:nth-child("+line+") td:nth-child(2)").html());
 		$("#des").val($("tr:nth-child("+line+") td:nth-child(3)").html());
 		$("#date").val($("tr:nth-child("+line+") td:nth-child(4)").html());
-		$("#quantity").val($("tr:nth-child("+line+") td:nth-child(5)").html());
+		//$("#quantity").val($("tr:nth-child("+line+") td:nth-child(5)").html());
 		$("#tid").val($("tr:nth-child("+line+") td:nth-child(1)").html());
+		$("#quantity2").val($("#quantity").val());
 	}
 
 

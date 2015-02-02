@@ -47,7 +47,10 @@ public class UserTicketResource {
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<Ticket> searchTicket(@QueryParam("dep") String dep,@QueryParam("des") String des,@QueryParam("date") String date,@QueryParam("quantity") String quantity){
 		
-		
+		System.out.println(dep+dep.getClass());
+		if(dep.equals("")) dep=null;
+		if(des.equals("")) des=null;
+		if(date.equals("")) date=null;
 		List<Ticket> l = ts.userFindTicket(dep, des, date, Integer.parseInt(quantity));
 		
 		return l;
@@ -56,9 +59,9 @@ public class UserTicketResource {
 	@GET
 	@Path("/buy")
 	@Produces({MediaType.TEXT_PLAIN})
-	public String buyTicket(@QueryParam("tid") int tid,@QueryParam("userid") int userid,@QueryParam("method") int method){
+	public String buyTicket(@QueryParam("tid") int tid,@QueryParam("userid") int userid,@QueryParam("method") int method,@QueryParam("quantity2") int quantity){
 		LinkedList<Transaction> q=TransactionQueue.getTransactionQueue();
-		int quantity=1;
+		
 		System.out.println(TransactionQueue.size());
 		Transaction trans=ts.buyTicketEnqueue(userid, tid, quantity, method);
 		System.out.println(TransactionQueue.size());
