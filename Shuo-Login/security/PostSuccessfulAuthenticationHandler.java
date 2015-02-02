@@ -73,10 +73,10 @@ public class PostSuccessfulAuthenticationHandler implements AuthenticationSucces
 	        }
 	 
 	        if (isUser) {
-	        	us.sendLoginEmail(username,"USER: ");
+	  //      	us.sendLoginEmail(username,"USER: ");
 	            return "/asuser.html";
 	        } else if (isAdmin) {
-	        	us.sendLoginEmail(username,"ADMIN: ");
+	 //       	us.sendLoginEmail(username,"ADMIN: ");
 	            return "/asadmin.html";
 	        } else {
 	            throw new IllegalStateException();

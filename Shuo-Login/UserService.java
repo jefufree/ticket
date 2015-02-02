@@ -19,7 +19,7 @@ import javax.mail.internet.InternetAddress;
 public class UserService {
 	final static String sub = " :welcome to use Ticket system";
 	final static String auto = " this is an automatic email,please do not reply,\n Thanks";
-	final static String back=" welcome back to ticket system";
+	final static String back = " welcome back to ticket system";
 	@Autowired
 	@Qualifier("userDao")
 	private HibernateDao<User, Integer> hd;
@@ -58,6 +58,10 @@ public class UserService {
 		return hd.findBy("username", username);
 	}
 
+	public User findUserById(Integer userid) {
+		return hd.findById(userid);
+	}
+
 	// 1-find user by pass for email only
 	public User findUserByPass(String password) {
 		return hd.findBy("password", password);
@@ -71,15 +75,16 @@ public class UserService {
 	// 2-add new users
 	public User addNewUser(String username, String password) {
 		User newu = new User();
-		if(emailValid(username)){
-		newu.setUsername(username);
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String hp = encoder.encode(password);
-	//	System.out.println(hp+" :"+hp.length());//
-		newu.setPassword(hp);
-		this.updateUser(newu);
-		return newu;
-		}else return null;
+		if (emailValid(username)) {
+			newu.setUsername(username);
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			String hp = encoder.encode(password);
+			// System.out.println(hp+" :"+hp.length());//
+			newu.setPassword(hp);
+			this.updateUser(newu);
+			return newu;
+		} else
+			return null;
 	}
 
 	private boolean emailValid(String username) {
@@ -95,41 +100,42 @@ public class UserService {
 	}
 
 	// 3- send automatic emails
-//	public void sendEmail(String username) {
-//		
-//		ms.sendMail(username, username + sub, body);		
-//	}
+	// public void sendEmail(String username) {
+	//
+	// ms.sendMail(username, username + sub, body);
+	// }
 
 	// 3-send login auto emails
-	public void sendLoginEmail(String username,String role) {
-		
-	ms.sendMail(username, role+username + back,auto);		
+	public void sendLoginEmail(String username, String role) {
+
+		ms.sendMail(username, role + username + back, auto);
 	}
 
-//	3-send verify emails for register
-public void sendVerifyEmail(String username){
-		
+	// 3-send verify emails for register
+	public void sendVerifyEmail(String username) {
+
 		String salt = BCrypt.gensalt(12);
 		String hash = BCrypt.hashpw(username, salt);
-		String body = "http://192.168.1.112:8080/Ticket/success.html?username_id="
-				+ username+"&key="+hash;
-		ms.sendMail(username, username + sub, body+"\n"+auto);
+		String body = "http://localhost:8080/Ticket/success.html?username_id="
+				+ username + "&key=" + hash;
+		ms.sendMail(username, username + sub, body + "\n" + auto);
 	}
-      //3-email verify
-	public boolean emailVerify(String username,String key){
+
+	// 3-email verify
+	public boolean emailVerify(String username, String key) {
 		boolean flag = BCrypt.checkpw(username, key);
-		User user=null;
-		if(flag){
-		String authority = "USER_ADMIN";// set authority for users		
-		user = this.findUser(username);
-		user.setEnable(1);
-		user.setAuthority(authority);
-		this.updateUser(user);
-		return true;
-		}
-		else return false;		
+		User user = null;
+		if (flag) {
+			String authority = "USER_ADMIN";// set authority for users
+			user = this.findUser(username);
+			user.setEnable(1);
+			user.setAuthority(authority);
+			this.updateUser(user);
+			return true;
+		} else
+			return false;
 	}
-	
+
 	private boolean luhnTest(String number) {
 		int s1 = 0, s2 = 0;
 		String reverse = new StringBuffer(number).reverse().toString();
