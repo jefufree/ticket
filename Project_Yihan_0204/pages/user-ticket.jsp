@@ -55,6 +55,10 @@ $('document').ready(function(){
 	$("#chart_div").hide();
 	$("#list").hide();
 	
+	if($("#user_name_logedin").text()!=""){
+		$("#login").hide();
+	}
+	
 	$('#bgvid').click(function(){     
 		   
 	    $('html,body').animate({scrollTop: '663px'}, 400);    
@@ -83,18 +87,9 @@ $('document').ready(function(){
 									drawStuff(data)}
 		});
 	});
-	$("#clear").click(function(){
-		$("#chart_div").empty();
-		$("#chart").empty();
-		$("#tickets").empty();
-		$("#list").hide();
-	});
+	
 	$("#search").click(function(){
-		/*
 		$("#columnchart_material").show();
-		*/
-		$("#chart_div").empty();
-		$("#chart").empty();
 		$.ajax({
 			url:"http://localhost:8080/Ticket/rest/userticket/search",
 			type:"get",
@@ -141,11 +136,6 @@ $('document').ready(function(){
 			alert("Please login first");
 		}
 		return false;
-	});
-	
-	$(".close").click(function(){
-		$(".alert").hide();
-		$(".reg_error").hide();
 	});
 	
 	 $("#pwd2").keyup(function(){
@@ -206,10 +196,11 @@ $('document').ready(function(){
 			$("#not_email").hide();
 			if($("#username_input").val().length!=0){
 				if(!validateEmail($("#username_input").val())){				
-					$("#not_email").show();
-				}
-			 }			
-	});
+				$("#not_email").show();
+			}
+	 }
+			
+		});
 		
 		$("#register_input").click(function(){
 			if($("#username_input").val() !="" && validateEmail($("#username_input").val()) ){
@@ -227,7 +218,6 @@ $('document').ready(function(){
 					datatype:"text",
 					success:function(data){
 						alert(data);
-						$("#reg_close").trigger('click');
 					}
 				});
 			}else{
@@ -450,10 +440,17 @@ function showAllTicket(data){
         <ul class="pull-right">
           <li><button type="button" class="btn btn-default" id="register" data-target="#myReg" data-toggle="modal" >Register</button></li>
           <li><button type="button" class="btn btn-default" id="login" data-target="#myModal" data-toggle="modal">Login</button></li>
-          <sec:authorize ifAllGranted="ROLE_USER">
-          <li><c:url value="/j_spring_security_logout" var="logoutUrl"/><div id="user_name_logedin"><sec:authentication property="name"/></div></li>
-          <li><a href="${logoutUrl}">Log Out</a></li>
-          </sec:authorize>
+         
+          <li> <sec:authorize ifAllGranted="ROLE_USER">
+          			<button type="button" class="btn btn-default"><div id="user_name_logedin"><sec:authentication property="name"/></div></button>
+          			<c:url value="/j_spring_security_logout" var="logoutUrl"/>
+          				
+          				<a href="${logoutUrl}">Log Out</a>
+        		</sec:authorize>
+        		
+    		</li>
+          <li></li>
+          
 		
           
         </ul>
@@ -514,7 +511,7 @@ function showAllTicket(data){
 			</div>
 			<div class="col-sm-2">
 			<button type="submit" class="btn btn-info" style="color: #5a5a5a;font-size: 12px;font-weight: bold;padding: 12px 12px 12px 12px;text-transform: uppercase;" id="search">S e a r c h</button>
-			<button type="reset" class="btn btn-default" style="color: #5a5a5a;font-size: 12px;font-weight: bold;padding: 12px 12px 12px 12px;text-transform: uppercase;" id="clear">Clear</button>
+			<button type="reset" class="btn btn-default" style="color: #5a5a5a;font-size: 12px;font-weight: bold;padding: 12px 12px 12px 12px;text-transform: uppercase;" id="search">Clear</button>
 			</div>
 			<div class="col-sm-1"></div>
 		</form>
@@ -534,7 +531,7 @@ function showAllTicket(data){
 		</select>
 		</div>
 		<div class="col-sm-2">
-		<input type="number" id="quantity2" name="quantity2" style="display:none"/>
+		<input type="number" id="quantity2" name="quantity2"  style="display:none"/>
 		<button type="submit" class="btn btn-info" style="color: #5a5a5a;font-size: 12px;font-weight: bold;padding: 12px 12px 12px 12px;text-transform: uppercase;" id="buy">B U Y</button>
 		</div>
 		
@@ -760,14 +757,13 @@ function showAllTicket(data){
 	        </div>
 	       
 	        
-	        <button type="reset" class="btn btn-default " id="reg_close" data-dismiss="modal">Close</button>
+	        <button type="reset" class="btn btn-default " data-dismiss="modal">Close</button>
 	        <button type="submit" class="btn btn-default" id="register_input" disabled>Submit</button>
       </form>
 		</div>
 	 </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-
 <sec:authorize ifAllGranted="ROLE_USER">
 <div id="user_name_logedin"><sec:authentication property="name"/></div>
 <c:url value="/j_spring_security_logout" var="logoutUrl"/>
