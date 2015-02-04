@@ -55,6 +55,10 @@ $('document').ready(function(){
 	$("#chart_div").hide();
 	$("#list").hide();
 	
+	if($("#user_name_logedin").text()!=""){
+		$("#login").hide();
+	}
+	
 	$('#bgvid').click(function(){     
 		   
 	    $('html,body').animate({scrollTop: '663px'}, 400);    
@@ -83,12 +87,14 @@ $('document').ready(function(){
 									drawStuff(data)}
 		});
 	});
+	
 	$("#clear").click(function(){
 		$("#chart_div").empty();
 		$("#chart").empty();
 		$("#tickets").empty();
 		$("#list").hide();
 	});
+	
 	$("#search").click(function(){
 		/*
 		$("#columnchart_material").show();
@@ -206,10 +212,11 @@ $('document').ready(function(){
 			$("#not_email").hide();
 			if($("#username_input").val().length!=0){
 				if(!validateEmail($("#username_input").val())){				
-					$("#not_email").show();
-				}
-			 }			
-	});
+				$("#not_email").show();
+			}
+	 	 }
+			
+		});
 		
 		$("#register_input").click(function(){
 			if($("#username_input").val() !="" && validateEmail($("#username_input").val()) ){
@@ -444,16 +451,23 @@ function showAllTicket(data){
       <div class="container">
         <ul class="pull-left">
           
-          <li><button type="submit" class="btn btn-default" id="findAll">Show All Tickets</button></li>
+          <li><button type="submit" class="btn btn-primary" id="findAll">Get Started</button></li>
           <li><button type="button" class="btn btn-default" id="goTran">Transaction History</button></li>
         </ul>
         <ul class="pull-right">
           <li><button type="button" class="btn btn-default" id="register" data-target="#myReg" data-toggle="modal" >Register</button></li>
           <li><button type="button" class="btn btn-default" id="login" data-target="#myModal" data-toggle="modal">Login</button></li>
-          <sec:authorize ifAllGranted="ROLE_USER">
-          <li><c:url value="/j_spring_security_logout" var="logoutUrl"/><div id="user_name_logedin"><sec:authentication property="name"/></div></li>
-          <li><a href="${logoutUrl}">Log Out</a></li>
-          </sec:authorize>
+         
+          <li> <sec:authorize ifAllGranted="ROLE_USER">
+          			<button type="button" class="btn btn-default"><div id="user_name_logedin"><sec:authentication property="name"/></div></button>
+          			<c:url value="/j_spring_security_logout" var="logoutUrl"/>
+          				
+          				<a href="${logoutUrl}">Log Out</a>
+        		</sec:authorize>
+        		
+    		</li>
+          <li></li>
+          
 		
           
         </ul>
@@ -510,7 +524,7 @@ function showAllTicket(data){
 			<input type="text" class="form-control input-lg" id="date" name="date" placeholder="YYYYMMDD"/> 
 			</div>
 			<div class="col-sm-2">
-			<input type="number" class="form-control input-lg" id="quantity" name="quantity" placeholder=1 />
+			<input type="number" class="form-control input-lg" id="quantity" name="quantity" value=1 />
 			</div>
 			<div class="col-sm-2">
 			<button type="submit" class="btn btn-info" style="color: #5a5a5a;font-size: 12px;font-weight: bold;padding: 12px 12px 12px 12px;text-transform: uppercase;" id="search">S e a r c h</button>
@@ -534,7 +548,7 @@ function showAllTicket(data){
 		</select>
 		</div>
 		<div class="col-sm-2">
-		<input type="number" id="quantity2" name="quantity2" style="display:none"/>
+		<input type="number" id="quantity2" name="quantity2"  style="display:none"/>
 		<button type="submit" class="btn btn-info" style="color: #5a5a5a;font-size: 12px;font-weight: bold;padding: 12px 12px 12px 12px;text-transform: uppercase;" id="buy">B U Y</button>
 		</div>
 		
@@ -653,6 +667,7 @@ function showAllTicket(data){
 	    </div>
 	  </div>
 	</div>
+	
 	
 <!-- *********************************************** -->
 <!-- *********************************************** -->
@@ -773,10 +788,5 @@ function showAllTicket(data){
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
-<sec:authorize ifAllGranted="ROLE_USER">
-<div id="user_name_logedin"><sec:authentication property="name"/></div>
-<c:url value="/j_spring_security_logout" var="logoutUrl"/>
-<a href="${logoutUrl}">Log Out</a>
-</sec:authorize>
 </body>
 </html>
