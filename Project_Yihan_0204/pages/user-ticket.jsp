@@ -88,8 +88,19 @@ $('document').ready(function(){
 		});
 	});
 	
+	$("#clear").click(function(){
+		$("#chart_div").empty();
+		$("#chart").empty();
+		$("#tickets").empty();
+		$("#list").hide();
+	});
+	
 	$("#search").click(function(){
+		/*
 		$("#columnchart_material").show();
+		*/
+		$("#chart_div").empty();
+		$("#chart").empty();
 		$.ajax({
 			url:"http://localhost:8080/Ticket/rest/userticket/search",
 			type:"get",
@@ -136,6 +147,11 @@ $('document').ready(function(){
 			alert("Please login first");
 		}
 		return false;
+	});
+	
+	$(".close").click(function(){
+		$(".alert").hide();
+		$(".reg_error").hide();
 	});
 	
 	 $("#pwd2").keyup(function(){
@@ -198,7 +214,7 @@ $('document').ready(function(){
 				if(!validateEmail($("#username_input").val())){				
 				$("#not_email").show();
 			}
-	 }
+	 	 }
 			
 		});
 		
@@ -218,6 +234,7 @@ $('document').ready(function(){
 					datatype:"text",
 					success:function(data){
 						alert(data);
+						$("#reg_close").trigger('click');
 					}
 				});
 			}else{
@@ -434,7 +451,7 @@ function showAllTicket(data){
       <div class="container">
         <ul class="pull-left">
           
-          <li><button type="submit" class="btn btn-default" id="findAll">Show All Tickets</button></li>
+          <li><button type="submit" class="btn btn-primary" id="findAll">Get Started</button></li>
           <li><button type="button" class="btn btn-default" id="goTran">Transaction History</button></li>
         </ul>
         <ul class="pull-right">
@@ -507,11 +524,11 @@ function showAllTicket(data){
 			<input type="text" class="form-control input-lg" id="date" name="date" placeholder="YYYYMMDD"/> 
 			</div>
 			<div class="col-sm-2">
-			<input type="number" class="form-control input-lg" id="quantity" name="quantity" placeholder=1 />
+			<input type="number" class="form-control input-lg" id="quantity" name="quantity" value=1 />
 			</div>
 			<div class="col-sm-2">
 			<button type="submit" class="btn btn-info" style="color: #5a5a5a;font-size: 12px;font-weight: bold;padding: 12px 12px 12px 12px;text-transform: uppercase;" id="search">S e a r c h</button>
-			<button type="reset" class="btn btn-default" style="color: #5a5a5a;font-size: 12px;font-weight: bold;padding: 12px 12px 12px 12px;text-transform: uppercase;" id="search">Clear</button>
+			<button type="reset" class="btn btn-default" style="color: #5a5a5a;font-size: 12px;font-weight: bold;padding: 12px 12px 12px 12px;text-transform: uppercase;" id="clear">Clear</button>
 			</div>
 			<div class="col-sm-1"></div>
 		</form>
@@ -757,7 +774,7 @@ function showAllTicket(data){
 	        </div>
 	       
 	        
-	        <button type="reset" class="btn btn-default " data-dismiss="modal">Close</button>
+	        <button type="reset" class="btn btn-default " id="reg_close" data-dismiss="modal">Close</button>
 	        <button type="submit" class="btn btn-default" id="register_input" disabled>Submit</button>
       </form>
 		</div>
