@@ -1,0 +1,74 @@
+
+
+.nav a {
+  color: #5a5a5a;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 14px 10px;
+  text-transform: uppercase;
+}
+
+.nav li {
+  display: inline;
+}
+/*
+.jumbotron {
+  
+  height: 500px;
+  
+}*/
+
+.showvideo .container {
+  position: relative;
+  top:0px;
+  height:500px;
+  overflow: hidden;
+}
+
+.showvideo.container video {
+   position: absolute;
+    left: 50%;
+    top: 50%;
+    /* The following will size the video to fit the full container. Not necessary, just nice.*/
+    min-width: 100%;
+    min-height: 100%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 0;
+    
+    
+}
+
+.showvideo.Container #centertext {
+    position: relative;
+    z-index: 1;
+}
+
+.learn-more {
+  background-color: #f7f7f7;
+}
+
+.learn-more h3 {
+  font-family: 'Shift', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.learn-more a {
+  color: #00b0ff;
+}
+
+.neighborhood-guides{
+    background-color:#efefef;
+    border-bottom:1px solid #dbdbdb;
+}
+.neighborhood-guides h2{
+    color:#393c3d;
+    font-size:24px;
+}
+.neighborhood-guides p{
+    margin-bottom:13px;
+    font-size:15px;
+}

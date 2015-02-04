@@ -1,0 +1,5 @@
+
+Please put : 
+	src			into	\Ticket
+	css , js , image 	into	\Ticket\WebContent
+	page			into 	\Ticket\WebContent\WEB-INF
