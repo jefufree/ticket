@@ -227,7 +227,7 @@ $('document').ready(function(){
 					datatype:"text",
 					success:function(data){
 						alert(data);
-						$("#ref_close").trigger('click');
+						$("#reg_close").trigger('click');
 					}
 				});
 			}else{
@@ -760,7 +760,7 @@ function showAllTicket(data){
 	        </div>
 	       
 	        
-	        <button type="reset" class="btn btn-default " data-dismiss="modal">Close</button>
+	        <button type="reset" class="btn btn-default " id="reg_close" data-dismiss="modal">Close</button>
 	        <button type="submit" class="btn btn-default" id="register_input" disabled>Submit</button>
       </form>
 		</div>
